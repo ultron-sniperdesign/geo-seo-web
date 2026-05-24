@@ -6,6 +6,7 @@
  */
 import "~/styles/global.css";
 import { site } from "~/i18n/site";
+import { organizationJsonLd, webSiteJsonLd } from "~/lib/jsonld";
 import Header from "~/components/Header.astro";
 import Footer from "~/components/Footer.astro";
 
@@ -13,10 +14,28 @@ interface Props {
   title: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
+  ogType?: "website" | "article";
+  /** Per-stránka schema uzly (Article / Service / FAQPage / BreadcrumbList). */
+  jsonLd?: Record<string, unknown>[];
+  /** noindex pro thank-you / utility stránky (default index, follow). */
+  noindex?: boolean;
 }
-const { title, description = site.org.description, image = "/og/default.png" } = Astro.props;
+const {
+  title,
+  description = site.org.description,
+  image = "/og/default.png",
+  imageAlt = "geo-seo.cz — GEO (Generative Engine Optimization)",
+  ogType = "website",
+  jsonLd = [],
+  noindex = false,
+} = Astro.props;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname;
 const ogImage = Astro.site ? new URL(image, Astro.site).href : image;
+const ldGraph = {
+  "@context": "https://schema.org",
+  "@graph": [organizationJsonLd(), webSiteJsonLd(), ...jsonLd],
+};
 ---
 
 <!doctype html>
@@ -26,8 +45,11 @@ const ogImage = Astro.site ? new URL(image, Astro.site).href : image;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={site.author} />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
+    <meta name="theme-color" content="#1fa06e" />
+    <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content="index, follow" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -36,14 +58,26 @@ const ogImage = Astro.site ? new URL(image, Astro.site).href : image;
     <link rel="preload" href="/fonts/geist-200-900-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/fonts/fonts.css" />
 
+    <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:locale" content={site.locale} />
     <meta property="og:site_name" content={site.name} />
+
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Strukturovaná data (schema.org @graph: Organization + WebSite + per-page uzly) -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(ldGraph)} />
   </head>
   <body>
     <a class="skip-link" href="#main">Přeskočit na obsah</a>

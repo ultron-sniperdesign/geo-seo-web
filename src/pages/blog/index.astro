@@ -4,6 +4,10 @@ import Section from "~/components/Section.astro";
 import Container from "~/components/Container.astro";
 import Prose from "~/components/Prose.astro";
 import Button from "~/components/Button.astro";
+import { breadcrumbJsonLd } from "~/lib/jsonld";
+
+const crumbs = [{ label: "Blog" }];
+const jsonLd = [breadcrumbJsonLd(crumbs)];
 ---
 
 <PageLayout
@@ -12,7 +16,8 @@ import Button from "~/components/Button.astro";
   eyebrow="Blog"
   heading="Blog o GEO a <strong>AI viditelnosti</strong>"
   lead="Trendy, postupy a případovky z generativního vyhledávání. První články brzy přidáme."
-  crumbs={[{ label: "Blog" }]}
+  crumbs={crumbs}
+  jsonLd={jsonLd}
 >
   <Section>
     <Container size="prose">

@@ -3,6 +3,10 @@ import PageLayout from "~/layouts/PageLayout.astro";
 import Section from "~/components/Section.astro";
 import Container from "~/components/Container.astro";
 import Prose from "~/components/Prose.astro";
+import { breadcrumbJsonLd } from "~/lib/jsonld";
+
+const crumbs = [{ label: "GDPR" }];
+const jsonLd = [breadcrumbJsonLd(crumbs)];
 ---
 
 <PageLayout
@@ -11,7 +15,8 @@ import Prose from "~/components/Prose.astro";
   eyebrow="Právní"
   heading="Zásady zpracování osobních údajů"
   lead="Jak nakládáme s údaji, které nám pošlete přes poptávkový formulář."
-  crumbs={[{ label: "GDPR" }]}
+  crumbs={crumbs}
+  jsonLd={jsonLd}
 >
   <Section>
     <Container size="prose">

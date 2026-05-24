@@ -6,6 +6,9 @@ import AnswerBlock from "~/components/AnswerBlock.astro";
 import Prose from "~/components/Prose.astro";
 import FAQ from "~/components/FAQ.astro";
 import ContactForm from "~/components/ContactForm.astro";
+import { serviceJsonLd, faqJsonLd, breadcrumbJsonLd } from "~/lib/jsonld";
+
+const crumbs = [{ label: "Služby", href: "/sluzby/" }, { label: "GEO/SEO Audit" }];
 
 const faq = [
   {
@@ -25,6 +28,17 @@ const faq = [
     a: "Ne. Audit je samostatný produkt. Na realizaci navazujeme jen pokud chcete — máme na ni 4 dlouhodobé služby, ale plán si můžete udělat i sami.",
   },
 ];
+
+const jsonLd = [
+  serviceJsonLd({
+    name: "GEO/SEO Audit",
+    description:
+      "Manuální audit AI viditelnosti: jak vás citují ChatGPT, Perplexity, Claude a Google AI Overviews, stav SEO základu a GEO připravenosti obsahu. Výstup: prioritizovaná roadmapa + debrief call.",
+    url: "/audit/",
+  }),
+  faqJsonLd(faq),
+  breadcrumbJsonLd(crumbs),
+];
 ---
 
 <PageLayout
@@ -33,7 +47,8 @@ const faq = [
   eyebrow="GEO/SEO Audit"
   heading="GEO/SEO Audit — zjistěte, <strong>proč vás AI necituje</strong>"
   lead="Konkrétní prioritizovaný plán, ne obecné rady. Zjistíte, kde váš web stojí v AI viditelnosti a co řešit jako první."
-  crumbs={[{ label: "Služby", href: "/sluzby/" }, { label: "GEO/SEO Audit" }]}
+  crumbs={crumbs}
+  jsonLd={jsonLd}
 >
   <Section>
     <Container size="prose">

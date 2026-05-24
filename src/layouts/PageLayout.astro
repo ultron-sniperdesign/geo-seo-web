@@ -18,11 +18,15 @@ interface Props {
   lead?: string;
   crumbs?: Crumb[];
   image?: string;
+  imageAlt?: string;
+  ogType?: "website" | "article";
+  jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
 }
-const { title, description, eyebrow, heading, lead, crumbs = [], image } = Astro.props;
+const { title, description, eyebrow, heading, lead, crumbs = [], image, imageAlt, ogType, jsonLd, noindex } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} image={image}>
+<BaseLayout title={title} description={description} image={image} imageAlt={imageAlt} ogType={ogType} jsonLd={jsonLd} noindex={noindex}>
   <PageHeader eyebrow={eyebrow} title={heading} lead={lead} crumbs={crumbs} />
   <slot />
 </BaseLayout>

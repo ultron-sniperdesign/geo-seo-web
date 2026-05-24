@@ -4,6 +4,10 @@ import Section from "~/components/Section.astro";
 import Container from "~/components/Container.astro";
 import ContactForm from "~/components/ContactForm.astro";
 import AuthorityStrip from "~/components/AuthorityStrip.astro";
+import { breadcrumbJsonLd } from "~/lib/jsonld";
+
+const crumbs = [{ label: "Kontakt" }];
+const jsonLd = [breadcrumbJsonLd(crumbs)];
 ---
 
 <PageLayout
@@ -12,7 +16,8 @@ import AuthorityStrip from "~/components/AuthorityStrip.astro";
   eyebrow="Kontakt"
   heading="Pojďme se <strong>bavit o vaší AI viditelnosti</strong>"
   lead="Napište pár řádků o webu a s čím potřebujete pomoct. Ozveme se obvykle do 24 hodin v pracovní dny."
-  crumbs={[{ label: "Kontakt" }]}
+  crumbs={crumbs}
+  jsonLd={jsonLd}
 >
   <Section>
     <Container>

@@ -6,6 +6,7 @@ import AnswerBlock from "~/components/AnswerBlock.astro";
 import Prose from "~/components/Prose.astro";
 import CTABanner from "~/components/CTABanner.astro";
 import { services, type Service } from "~/data/services";
+import { serviceJsonLd, breadcrumbJsonLd } from "~/lib/jsonld";
 
 export function getStaticPaths() {
   return services
@@ -17,6 +18,16 @@ interface Props {
   service: Service;
 }
 const { service } = Astro.props;
+
+const crumbs = [{ label: "Služby", href: "/sluzby/" }, { label: service.title }];
+const jsonLd = [
+  serviceJsonLd({
+    name: service.title,
+    description: service.valueProp ?? service.blurb,
+    url: `/sluzby/${service.slug}/`,
+  }),
+  breadcrumbJsonLd(crumbs),
+];
 ---
 
 <PageLayout
@@ -25,7 +36,8 @@ const { service } = Astro.props;
   eyebrow="Služby"
   heading={service.title}
   lead={service.valueProp}
-  crumbs={[{ label: "Služby", href: "/sluzby/" }, { label: service.title }]}
+  crumbs={crumbs}
+  jsonLd={jsonLd}
 >
   <Section>
     <Container size="prose">

@@ -6,6 +6,9 @@ import AnswerBlock from "~/components/AnswerBlock.astro";
 import Prose from "~/components/Prose.astro";
 import FAQ from "~/components/FAQ.astro";
 import CTABanner from "~/components/CTABanner.astro";
+import { articleJsonLd, faqJsonLd, breadcrumbJsonLd } from "~/lib/jsonld";
+
+const crumbs = [{ label: "GEO návod" }];
 
 const faq = [
   {
@@ -21,6 +24,18 @@ const faq = [
     a: "Sledováním citací napříč platformami (ChatGPT, Perplexity, Google AI) v čase — tzv. citation share. Průběžné měření a iteraci řeší <a href='/sluzby/sprava-geo/'>správa GEO</a>.",
   },
 ];
+
+const jsonLd = [
+  articleJsonLd({
+    title: "GEO návod: jak se dostat do odpovědí AI",
+    description:
+      "Praktický GEO playbook krok za krokem: answer blocky, fact-density, strukturovaná data, AI crawlery, brand mentions a freshness.",
+    url: "/geo-navod/",
+    datePublished: "2026-05-24",
+  }),
+  faqJsonLd(faq),
+  breadcrumbJsonLd(crumbs),
+];
 ---
 
 <PageLayout
@@ -29,7 +44,9 @@ const faq = [
   eyebrow="GEO návod"
   heading="GEO návod: jak se dostat do <strong>odpovědí AI</strong>"
   lead="Praktický playbook v šesti krocích — od citovatelné struktury obsahu po přístup pro AI crawlery. Můžete projít sami, nebo to za vás uděláme."
-  crumbs={[{ label: "GEO návod" }]}
+  crumbs={crumbs}
+  ogType="article"
+  jsonLd={jsonLd}
 >
   <Section>
     <Container size="prose">

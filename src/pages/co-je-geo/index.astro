@@ -6,6 +6,9 @@ import AnswerBlock from "~/components/AnswerBlock.astro";
 import Prose from "~/components/Prose.astro";
 import FAQ from "~/components/FAQ.astro";
 import CTABanner from "~/components/CTABanner.astro";
+import { articleJsonLd, faqJsonLd, breadcrumbJsonLd } from "~/lib/jsonld";
+
+const crumbs = [{ label: "Co je GEO" }];
 
 const faq = [
   {
@@ -25,6 +28,18 @@ const faq = [
     a: "Závisí na platformě a stavu webu. Perplexity reaguje na čerstvý obsah během dní, u ostatních platforem jde spíš o týdny až měsíce. Audit ukáže, co řešit jako první.",
   },
 ];
+
+const jsonLd = [
+  articleJsonLd({
+    title: "Co je GEO (Generative Engine Optimization)",
+    description:
+      "GEO = optimalizace pro citace v AI. Čím se liší od SEO, proč vzniklo a jak se dostat do odpovědí ChatGPT, Perplexity, Claude a Google AI Overviews.",
+    url: "/co-je-geo/",
+    datePublished: "2026-05-24",
+  }),
+  faqJsonLd(faq),
+  breadcrumbJsonLd(crumbs),
+];
 ---
 
 <PageLayout
@@ -33,7 +48,9 @@ const faq = [
   eyebrow="Co je GEO"
   heading="Co je GEO (Generative Engine Optimization)"
   lead="Optimalizace pro to, aby vás generativní AI <strong>citovala jako zdroj</strong>. Čím se liší od SEO, proč vzniklo a jak se do AI odpovědí dostat."
-  crumbs={[{ label: "Co je GEO" }]}
+  crumbs={crumbs}
+  ogType="article"
+  jsonLd={jsonLd}
 >
   <Section>
     <Container size="prose">

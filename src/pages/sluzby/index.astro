@@ -4,6 +4,10 @@ import Section from "~/components/Section.astro";
 import Container from "~/components/Container.astro";
 import ServiceCard from "~/components/ServiceCard.astro";
 import { services } from "~/data/services";
+import { breadcrumbJsonLd } from "~/lib/jsonld";
+
+const crumbs = [{ label: "Služby" }];
+const jsonLd = [breadcrumbJsonLd(crumbs)];
 ---
 
 <PageLayout
@@ -12,7 +16,8 @@ import { services } from "~/data/services";
   eyebrow="Služby"
   heading="Od auditu k <strong>realizaci</strong>"
   lead="Vstupní produkt je Audit — zjistíte, kde stojíte. Na něj navazují 4 dlouhodobé služby."
-  crumbs={[{ label: "Služby" }]}
+  crumbs={crumbs}
+  jsonLd={jsonLd}
 >
   <Section>
     <Container>

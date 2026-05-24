@@ -5,6 +5,19 @@ import Container from "~/components/Container.astro";
 import AnswerBlock from "~/components/AnswerBlock.astro";
 import Prose from "~/components/Prose.astro";
 import CTABanner from "~/components/CTABanner.astro";
+import { articleJsonLd, breadcrumbJsonLd } from "~/lib/jsonld";
+
+const crumbs = [{ label: "Platformy" }];
+const jsonLd = [
+  articleJsonLd({
+    title: "Platformy: optimalizace pro ChatGPT, Perplexity, Claude a Google AI",
+    description:
+      "Každá AI platforma vybírá zdroje jinak. Jak se dostat do odpovědí ChatGPT, Perplexity, Claude, Google AI Overviews a dalších generativních enginů.",
+    url: "/platformy/",
+    datePublished: "2026-05-24",
+  }),
+  breadcrumbJsonLd(crumbs),
+];
 ---
 
 <PageLayout
@@ -13,7 +26,9 @@ import CTABanner from "~/components/CTABanner.astro";
   eyebrow="Platformy"
   heading="Každá AI vybírá zdroje <strong>jinak</strong>"
   lead="ChatGPT, Perplexity i Google AI fungují odlišně. Tady je rychlý přehled, co u které platformy rozhoduje o citaci."
-  crumbs={[{ label: "Platformy" }]}
+  crumbs={crumbs}
+  ogType="article"
+  jsonLd={jsonLd}
 >
   <Section>
     <Container size="prose">
