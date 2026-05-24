@@ -1,0 +1,73 @@
+---
+/**
+ * ServiceCard.astro — 1 služba na homepage / rozcestníku. Hover lift + accent.
+ * featured = zvýraznění Auditu (vstupní produkt).
+ */
+interface Props {
+  title: string;
+  blurb: string;
+  href: string;
+  featured?: boolean;
+  tag?: string;
+}
+const { title, blurb, href, featured = false, tag } = Astro.props;
+---
+
+<a href={href} class:list={["scard", featured && "scard--featured"]}>
+  {tag && <span class="scard__tag">{tag}</span>}
+  <h3 class="scard__title">{title}</h3>
+  <p class="scard__blurb">{blurb}</p>
+  <span class="scard__more">
+    Zjistit víc
+    <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M1 7h12M13 7l-5-5M13 7l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </span>
+</a>
+
+<style>
+  .scard {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 1.5rem 1.4rem 1.3rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-lg);
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+  .scard:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-card-hover);
+  }
+  .scard--featured {
+    border-color: var(--color-accent);
+    background: var(--color-accent-tint);
+  }
+  .scard__tag {
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent-strong);
+  }
+  .scard__title { font-size: 1.1rem; font-weight: 600; }
+  .scard__blurb { margin: 0; font-size: 0.92rem; line-height: 1.55; color: var(--color-ink-muted); flex: 1; }
+  .scard__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent-strong);
+  }
+  .scard__more svg { transition: transform var(--dur-base) var(--ease-out); }
+  .scard:hover .scard__more svg { transform: translateX(3px); }
+</style>

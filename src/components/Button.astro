@@ -1,0 +1,77 @@
+---
+/**
+ * Button.astro — JEDNA tlačítková komponenta s variant/size propem
+ * (architecture skill §5.4 — žádné ButtonPrimary/ButtonSecondary soubory).
+ * Renderuje <a> když je href, jinak <button>.
+ * Mikroanimace: hover lift + posun šipky (BEZ reveal).
+ */
+interface Props {
+  variant?: "primary" | "secondary" | "ghost";
+  size?: "sm" | "md" | "lg";
+  href?: string;
+  type?: "button" | "submit";
+  arrow?: boolean;
+  class?: string;
+}
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  type = "button",
+  arrow = false,
+  class: cls = "",
+} = Astro.props;
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  class:list={["btn", `btn--${variant}`, `btn--${size}`, cls]}
+  href={href}
+  type={href ? undefined : type}
+>
+  <slot />
+  {arrow && (
+    <svg class="btn__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M1 7h12M13 7l-5-5M13 7l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  )}
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    line-height: 1;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      background var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn__arrow { transition: transform var(--dur-base) var(--ease-out); }
+  .btn:hover .btn__arrow { transform: translateX(3px); }
+
+  .btn--sm { padding: 0.5rem 0.875rem; font-size: 0.875rem; }
+  .btn--md { padding: 0.7rem 1.25rem; font-size: 0.95rem; }
+  .btn--lg { padding: 0.9rem 1.6rem; font-size: 1.05rem; }
+
+  /* primary — tmavší zelená kvůli AA kontrastu bílého textu */
+  .btn--primary { background: var(--color-accent-strong); color: #fff; box-shadow: var(--shadow-card); }
+  .btn--primary:hover { background: oklch(0.4 0.16 158); box-shadow: var(--shadow-card-hover); }
+
+  .btn--secondary { background: var(--color-paper); color: var(--color-ink); border-color: var(--color-rule-strong); }
+  .btn--secondary:hover { border-color: var(--color-accent); background: var(--color-paper-hover); }
+
+  .btn--ghost { background: transparent; color: var(--color-accent-strong); }
+  .btn--ghost:hover { background: var(--color-accent-tint); }
+</style>

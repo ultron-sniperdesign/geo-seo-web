@@ -1,0 +1,69 @@
+---
+/**
+ * FAQ.astro — accordion otázek a odpovědí (native <details>, žádný JS, A11y OK).
+ * Odpovědi přes set:html (povolit odkazy/strong). Mirror do FAQPage JSON-LD řeší stránka.
+ */
+interface FaqItem {
+  q: string;
+  a: string;
+}
+interface Props {
+  items: FaqItem[];
+  title?: string;
+}
+const { items, title } = Astro.props;
+---
+
+<div class="faq-wrap">
+  {title && <h2 class="faq-wrap__title">{title}</h2>}
+  <dl class="faq">
+    {items.map((f) => (
+      <details class="faq__item">
+        <summary class="faq__q">{f.q}</summary>
+        <div class="faq__a" set:html={f.a} />
+      </details>
+    ))}
+  </dl>
+</div>
+
+<style>
+  .faq-wrap__title { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; margin-bottom: 1.5rem; }
+  .faq { margin: 0; display: grid; gap: 0.75rem; }
+  .faq__item {
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-lg);
+    background: var(--color-paper);
+    overflow: hidden;
+    transition: border-color var(--dur-base) var(--ease-out);
+  }
+  .faq__item[open] { border-color: var(--color-accent); }
+  .faq__q {
+    cursor: pointer;
+    list-style: none;
+    padding: 1.1rem 1.3rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-ink);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__q::after {
+    content: "+";
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    color: var(--color-accent-strong);
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .faq__item[open] .faq__q::after { transform: rotate(45deg); }
+  .faq__a {
+    padding: 0 1.3rem 1.2rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+  .faq__a :global(a) { color: var(--color-accent-strong); text-decoration: underline; text-underline-offset: 2px; }
+  .faq__a :global(strong) { color: var(--color-ink); }
+</style>

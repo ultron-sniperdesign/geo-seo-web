@@ -1,0 +1,48 @@
+---
+/**
+ * FormField.astro — atomický field (label + input/textarea + chyba).
+ * Reusable pro text/email/url/textarea. GDPR checkbox řeší ContactForm inline.
+ */
+interface Props {
+  name: string;
+  label: string;
+  type?: "text" | "email" | "url" | "textarea";
+  required?: boolean;
+  placeholder?: string;
+  autocomplete?: string;
+}
+const { name, label, type = "text", required = false, placeholder, autocomplete } = Astro.props;
+const id = `field-${name}`;
+---
+
+<div class="field">
+  <label class="field__label" for={id}>
+    {label}{required && <span aria-hidden="true"> *</span>}
+  </label>
+  {type === "textarea" ? (
+    <textarea id={id} name={name} required={required} rows="4" placeholder={placeholder} class="field__input"></textarea>
+  ) : (
+    <input id={id} name={name} type={type} required={required} placeholder={placeholder} autocomplete={autocomplete} class="field__input" />
+  )}
+</div>
+
+<style>
+  .field { display: grid; gap: 0.4rem; }
+  .field__label { font-size: 0.85rem; font-weight: 600; color: var(--color-ink); }
+  .field__input {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    background: var(--color-paper);
+    border: 1px solid var(--color-rule-strong);
+    border-radius: var(--radius-md);
+    padding: 0.65rem 0.8rem;
+    transition: border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .field__input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-tint);
+  }
+  textarea.field__input { resize: vertical; min-height: 6rem; }
+</style>

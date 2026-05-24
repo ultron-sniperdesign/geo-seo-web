@@ -1,0 +1,82 @@
+---
+/**
+ * CTABanner.astro — full-width akční sekce (tmavý ink blok pro rytmus, design
+ * mantinel: sekce se smí prolínat tmavší). Claim + primární CTA + sekundární odkaz.
+ */
+import Button from "~/components/Button.astro";
+
+interface Props {
+  title: string;
+  text?: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+const { title, text, primaryLabel, primaryHref, secondaryLabel, secondaryHref } = Astro.props;
+---
+
+<div class="cta-banner">
+  <h2 class="cta-banner__title" set:html={title} />
+  {text && <p class="cta-banner__text">{text}</p>}
+  <div class="cta-banner__actions">
+    <Button variant="primary" size="lg" href={primaryHref} arrow>{primaryLabel}</Button>
+    {secondaryLabel && secondaryHref && (
+      <a class="cta-banner__ghost" href={secondaryHref}>{secondaryLabel}</a>
+    )}
+  </div>
+</div>
+
+<style>
+  .cta-banner {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    border-radius: var(--radius-xl);
+    padding: clamp(2.25rem, 5vw, 3.5rem);
+    text-align: center;
+  }
+  .cta-banner::before {
+    content: "";
+    position: absolute;
+    inset: auto -10% -60% auto;
+    width: 30rem;
+    height: 30rem;
+    background: radial-gradient(circle, oklch(0.58 0.15 158 / 0.32), transparent 64%);
+    pointer-events: none;
+  }
+  .cta-banner__title {
+    position: relative;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    max-width: 38rem;
+    margin-inline: auto;
+  }
+  .cta-banner__title :global(strong) { color: var(--color-accent-bright); }
+  .cta-banner__text {
+    position: relative;
+    margin: 1rem auto 0;
+    max-width: 34rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: oklch(from var(--color-paper) l c h / 0.8);
+  }
+  .cta-banner__actions {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.875rem 1.25rem;
+    margin-top: 1.75rem;
+  }
+  .cta-banner__ghost {
+    font-weight: 600;
+    color: var(--color-paper);
+    border-bottom: 1px solid oklch(from var(--color-paper) l c h / 0.35);
+    padding-bottom: 2px;
+    transition: border-color var(--dur-base) var(--ease-out);
+  }
+  .cta-banner__ghost:hover { border-color: var(--color-accent-bright); }
+</style>

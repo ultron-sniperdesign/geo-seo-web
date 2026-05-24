@@ -1,0 +1,52 @@
+---
+/**
+ * PageHeader.astro — menší hero pro vnitřní stránky: breadcrumb + eyebrow +
+ * H1 + lead. title/lead přes set:html (highlight přes <strong>).
+ */
+import Container from "~/components/Container.astro";
+import Breadcrumbs from "~/components/Breadcrumbs.astro";
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  crumbs?: Crumb[];
+}
+const { eyebrow, title, lead, crumbs = [] } = Astro.props;
+---
+
+<section class="page-header">
+  <Container size="prose">
+    {crumbs.length > 0 && <Breadcrumbs items={crumbs} />}
+    {eyebrow && <span class="page-header__eyebrow">{eyebrow}</span>}
+    <h1 class="page-header__title" set:html={title} />
+    {lead && <p class="page-header__lead" set:html={lead} />}
+  </Container>
+</section>
+
+<style>
+  .page-header { padding-block: clamp(2.5rem, 5vw, 4rem) clamp(1rem, 2vw, 1.5rem); }
+  .page-header__eyebrow {
+    display: inline-block;
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-strong);
+  }
+  .page-header__title { margin-top: 0.75rem; font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 700; }
+  .page-header__title :global(strong) { color: var(--color-accent-strong); }
+  .page-header__lead {
+    margin: 1.1rem 0 0;
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+  .page-header__lead :global(strong) { color: var(--color-ink); font-weight: 600; }
+</style>

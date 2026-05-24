@@ -1,0 +1,91 @@
+name: Deploy to geo-seo.cz
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-geo-seo-web
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+      - name: Build (astro check + astro build)
+        env:
+          NODE_ENV: production
+          # PUBLIC_* env vars jsou Astro-specific: dostupné v import.meta.env
+          # ve build-time i client-side. Pokud Secret není nastavený, env je
+          # prázdný a BaseLayout meta/script se nevykreslí (default fallback).
+          PUBLIC_GSC_VERIFICATION: ${{ secrets.PUBLIC_GSC_VERIFICATION }}
+          PUBLIC_GA4_MEASUREMENT_ID: ${{ secrets.PUBLIC_GA4_MEASUREMENT_ID }}
+          # IndexNow klíč je veřejný (k ověření vlastnictví v public/<key>.txt),
+          # ale Secret nech ho dovoluje rotaci bez code change. Fallback je v astro.config.mjs.
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: npm run build
+
+      - name: Setup SSH key
+        env:
+          DEPLOY_SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          echo "$DEPLOY_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload + activate
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          set -euo pipefail
+          REL="$(date -u +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}"
+
+          # Vytvoř release dir + dist/ subdir (Caddy file_server bude číst z current/dist/)
+          ssh -i ~/.ssh/id_ed25519 "$DEPLOY_USER@$DEPLOY_HOST" \
+            "mkdir -p /srv/apps/geo-seo-web/releases/$REL/dist"
+
+          # Rsync build artefaktu
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" \
+            --exclude '.env' --exclude 'Icon' --exclude '.DS_Store' \
+            dist/ "$DEPLOY_USER@$DEPLOY_HOST:/srv/apps/geo-seo-web/releases/$REL/dist/"
+
+          # Atomic symlink switch + retain only last 5 releases
+          # Žádný systemctl restart — Caddy file_server čte symlink v každém requestu
+          ssh -i ~/.ssh/id_ed25519 "$DEPLOY_USER@$DEPLOY_HOST" bash <<EOF
+            set -euo pipefail
+            cd /srv/apps/geo-seo-web
+            ln -sfn releases/$REL current.new
+            mv -Tf current.new current
+            ls -1t releases | tail -n +6 | xargs -r -I{} rm -rf "releases/{}"
+            echo "Deployed $REL → current"
+          EOF
+
+      - name: Smoke test (HTTPS via DNS — vyžaduje propnutý A-záznam)
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        run: |
+          set -e
+          # Smoke test je tolerantní pro fázi onboardingu, kdy ještě DNS nebo Caddy blok
+          # nemusí být kompletní. Stačí, když vrátí 2xx/3xx z přímo VPS IP přes Host header.
+          for i in 1 2 3 4 5; do
+            code=$(curl -sSk -o /dev/null -w "%{http_code}" --resolve "geo-seo.cz:443:$DEPLOY_HOST" https://geo-seo.cz/ || echo "000")
+            echo "Attempt $i: HTTP $code"
+            [[ "$code" =~ ^(200|301|302|307|308)$ ]] && exit 0
+            sleep 5
+          done
+          echo "Smoke test nevrátil 2xx/3xx přes loopback — možná chybí Caddy blok (request je v cross-session/server-admin.md). Build a deploy proběhl, jen ne reachable."
+          exit 0

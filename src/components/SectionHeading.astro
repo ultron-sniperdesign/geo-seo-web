@@ -1,0 +1,43 @@
+---
+/**
+ * SectionHeading.astro — eyebrow + h2 + lead. Jednotná typografie hlaviček sekcí.
+ * title/lead přes set:html (povolit <strong> highlight) → scoped :global().
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  align?: "left" | "center";
+}
+const { eyebrow, title, lead, align = "left" } = Astro.props;
+---
+
+<header class:list={["sh", `sh--${align}`]}>
+  {eyebrow && <span class="sh__eyebrow">{eyebrow}</span>}
+  <h2 class="sh__title" set:html={title} />
+  {lead && <p class="sh__lead" set:html={lead} />}
+</header>
+
+<style>
+  .sh { max-width: 48rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .sh--center { margin-inline: auto; text-align: center; }
+  .sh__eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-strong);
+    margin-bottom: 0.75rem;
+  }
+  .sh__title { font-size: clamp(1.6rem, 3.5vw, 2.5rem); font-weight: 700; }
+  .sh__title :global(strong) { color: var(--color-accent-strong); }
+  .sh__lead {
+    margin: 0.875rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+  .sh__lead :global(strong) { color: var(--color-ink); font-weight: 600; }
+</style>

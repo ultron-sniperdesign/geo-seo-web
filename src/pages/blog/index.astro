@@ -1,0 +1,33 @@
+---
+import PageLayout from "~/layouts/PageLayout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import Prose from "~/components/Prose.astro";
+import Button from "~/components/Button.astro";
+---
+
+<PageLayout
+  title="Blog o GEO a AI viditelnosti | geo-seo.cz"
+  description="Články o GEO, citacích v AI, trendech v generativním vyhledávání a praktických postupech. Brzy přidáme první příspěvky."
+  eyebrow="Blog"
+  heading="Blog o GEO a <strong>AI viditelnosti</strong>"
+  lead="Trendy, postupy a případovky z generativního vyhledávání. První články brzy přidáme."
+  crumbs={[{ label: "Blog" }]}
+>
+  <Section>
+    <Container size="prose">
+      <Prose>
+        <p>
+          Blog teprve rozjíždíme. Než přibudou první články, mrkněte na naše pilíře —
+          mají všechno podstatné na jednom místě:
+        </p>
+        <ul>
+          <li><a href="/co-je-geo/">Co je GEO (Generative Engine Optimization)</a></li>
+          <li><a href="/geo-navod/">GEO návod — playbook krok za krokem</a></li>
+          <li><a href="/platformy/">Platformy: ChatGPT, Perplexity, Google AI</a></li>
+        </ul>
+      </Prose>
+      <Button variant="primary" size="md" href="/audit/" arrow>Objednat GEO audit</Button>
+    </Container>
+  </Section>
+</PageLayout>

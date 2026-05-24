@@ -1,0 +1,115 @@
+---
+import PageLayout from "~/layouts/PageLayout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import AnswerBlock from "~/components/AnswerBlock.astro";
+import Prose from "~/components/Prose.astro";
+import FAQ from "~/components/FAQ.astro";
+import CTABanner from "~/components/CTABanner.astro";
+
+const faq = [
+  {
+    q: "Stačí na GEO upravit obsah, nebo i web technicky?",
+    a: "Obojí. Citovatelný obsah je polovina — druhá je technika: strukturovaná data, povolení AI crawlerů a indexační zdraví. Detail řeší <a href='/sluzby/technicka-uprava/'>Technická úprava</a>.",
+  },
+  {
+    q: "Co je answer block?",
+    a: "Krátká, samonosná odpověď (40–60 slov) hned pod nadpisem, kterou AI může citovat 1:1. Přímo odpovídá na hlavní dotaz stránky a obsahuje cílovou frázi.",
+  },
+  {
+    q: "Jak poznám, že to funguje?",
+    a: "Sledováním citací napříč platformami (ChatGPT, Perplexity, Google AI) v čase — tzv. citation share. Průběžné měření a iteraci řeší <a href='/sluzby/sprava-geo/'>správa GEO</a>.",
+  },
+];
+---
+
+<PageLayout
+  title="GEO návod: jak se dostat do odpovědí AI (playbook) | geo-seo.cz"
+  description="Praktický GEO playbook krok za krokem: answer blocky, fact-density, strukturovaná data, AI crawlery, brand mentions a freshness. Jak vás začne citovat AI."
+  eyebrow="GEO návod"
+  heading="GEO návod: jak se dostat do <strong>odpovědí AI</strong>"
+  lead="Praktický playbook v šesti krocích — od citovatelné struktury obsahu po přístup pro AI crawlery. Můžete projít sami, nebo to za vás uděláme."
+  crumbs={[{ label: "GEO návod" }]}
+>
+  <Section>
+    <Container size="prose">
+      <AnswerBlock
+        text="<strong>GEO playbook</strong> má šest kroků: (1) krátké citovatelné odpovědi a jasná struktura, (2) fact-density se zdroji a datacemi, (3) strukturovaná data (schema), (4) povolení AI crawlerů, (5) brand mentions mimo web a (6) čerstvost obsahu. Společně zvyšují pravděpodobnost, že vás AI ocituje."
+      />
+
+      <Prose class="mt">
+        <h2>1. Krátká odpověď a struktura obsahu</h2>
+        <p>
+          Začněte každou důležitou stránku <strong>answer blockem</strong> — 40–60 slovní
+          samonosnou odpovědí hned pod nadpisem. Pak pyramidová struktura: nejdřív závěr, pak
+          detail. Nadpisy formulujte jako otázky, na které lidé (a AI) hledají odpověď.
+        </p>
+
+        <h2>2. Fact-density a citovatelnost</h2>
+        <p>
+          AI preferuje obsah s vysokou <strong>hustotou faktů</strong>: konkrétní čísla, datace,
+          jména a zdroje. Cílem je ~3 a více ověřitelných faktů na 100 slov edukativního textu.
+          Vágní marketingové fráze AI přeskakuje.
+        </p>
+
+        <h2>3. Strukturovaná data (schema)</h2>
+        <p>
+          Označte obsah strojově čitelně: <strong>Article</strong>, <strong>FAQPage</strong>,
+          <strong>HowTo</strong>, u e-shopů <strong>Product</strong>. Pomáhá to enginu pochopit,
+          co stránka říká. Implementaci řeší <a href="/sluzby/technicka-uprava/">technická úprava</a>.
+        </p>
+
+        <h2>4. Přístup AI crawlerů</h2>
+        <p>
+          Ověřte, že nemáte v <code>robots.txt</code> nevědomě blokované AI roboty —
+          <strong>GPTBot</strong>, <strong>ClaudeBot</strong>, <strong>PerplexityBot</strong>,
+          <strong>Google-Extended</strong>. Doplňte <code>llms.txt</code> jako mapu obsahu pro AI.
+        </p>
+
+        <h2>5. Brand mentions a off-page</h2>
+        <p>
+          Zhruba <strong>dvě třetiny citací</strong> v AI odpovědích pochází z third-party zdrojů
+          (oborové weby, diskuze, recenze). Budovat zmínky o značce mimo vlastní web je proto
+          stejně důležité jako obsah na webu.
+        </p>
+
+        <h2>6. Freshness</h2>
+        <p>
+          Některé enginy (zejména Perplexity) výrazně preferují <strong>čerstvý obsah</strong> a
+          dokážou citovat článek během dní. Pravidelná aktualizace drží vaši AI viditelnost
+          v čase.
+        </p>
+
+        <h2>Nechcete to dělat sami?</h2>
+        <p>
+          Začněte <a href="/audit/">GEO/SEO Auditem</a> — ukáže, které z těchto kroků váš web
+          nejvíc brzdí. Realizaci pak převezmou <a href="/sluzby/geo-obsah/">GEO obsahové služby</a>
+          a <a href="/sluzby/technicka-uprava/">technická úprava</a>.
+        </p>
+      </Prose>
+    </Container>
+  </Section>
+
+  <Section bg="deep">
+    <Container size="prose">
+      <FAQ title="Časté otázky k GEO návodu" items={faq} />
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <CTABanner
+        title="Začněte tam, kde to <strong>nejvíc bolí</strong>"
+        text="GEO/SEO Audit vám ukáže, který krok playbooku řešit jako první — konkrétní prioritizovaný plán."
+        primaryLabel="Objednat GEO audit"
+        primaryHref="/audit/"
+        secondaryLabel="Co je GEO →"
+        secondaryHref="/co-je-geo/"
+      />
+    </Container>
+  </Section>
+</PageLayout>
+
+<style>
+  .mt { margin-top: 2rem; }
+</style>

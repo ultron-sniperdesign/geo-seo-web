@@ -1,0 +1,57 @@
+---
+/**
+ * Logo.astro — brand lockup (varianta B): zelený citační mark + wordmark
+ * "GEO SEO" v Geist, ink. Mark = currentColor přizpůsobený na accent.
+ * Mikroanimace: mark se na hover lehce natočí (BEZ reveal-on-scroll).
+ */
+interface Props {
+  href?: string;
+  size?: "sm" | "md";
+  class?: string;
+}
+const { href = "/", size = "md", class: cls = "" } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={["logo", `logo--${size}`, cls]}
+  aria-label="geo-seo.cz — domovská stránka"
+>
+  <svg class="logo__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <g fill="currentColor">
+      <path d="M45 8 l3 7.5 7.5 3 -7.5 3 -3 7.5 -3 -7.5 -7.5 -3 7.5 -3 Z" />
+      <rect x="9" y="27" width="17" height="14" rx="4.5" />
+      <path d="M12 40 h9 l-7 8 Z" />
+      <rect x="31" y="27" width="17" height="14" rx="4.5" />
+      <path d="M34 40 h9 l-7 8 Z" />
+    </g>
+  </svg>
+  <span class="logo__word">GEO&nbsp;SEO</span>
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    line-height: 1;
+  }
+  .logo__mark {
+    color: var(--color-accent);
+    flex: none;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .logo:hover .logo__mark {
+    transform: rotate(-6deg) scale(1.06);
+  }
+  .logo__word {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+  .logo--md .logo__mark { width: 1.75rem; height: 1.75rem; }
+  .logo--md .logo__word { font-size: 1.2rem; }
+  .logo--sm .logo__mark { width: 1.4rem; height: 1.4rem; }
+  .logo--sm .logo__word { font-size: 1rem; }
+</style>

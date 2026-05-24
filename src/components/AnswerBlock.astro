@@ -1,0 +1,39 @@
+---
+/**
+ * AnswerBlock.astro — citovatelná krátká odpověď (40–60 slov) hned pod H1.
+ * Klíčový GEO pattern: samonosný blok, který AI může citovat 1:1.
+ */
+interface Props {
+  text: string;
+  label?: string;
+}
+const { text, label = "Stručná odpověď" } = Astro.props;
+---
+
+<div class="answer-block">
+  <span class="answer-block__label">{label}</span>
+  <p class="answer-block__text" set:html={text} />
+</div>
+
+<style>
+  .answer-block {
+    max-width: 52rem;
+    padding: 1.5rem 1.75rem;
+    background: var(--color-paper);
+    border-left: 4px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+  }
+  .answer-block__label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-strong);
+    margin-bottom: 0.5rem;
+  }
+  .answer-block__text { margin: 0; font-size: 1.15rem; line-height: 1.55; font-weight: 500; color: var(--color-ink); }
+  .answer-block__text :global(strong) { color: var(--color-accent-strong); }
+</style>

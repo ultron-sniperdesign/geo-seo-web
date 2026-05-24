@@ -1,0 +1,92 @@
+---
+import PageLayout from "~/layouts/PageLayout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import AnswerBlock from "~/components/AnswerBlock.astro";
+import Prose from "~/components/Prose.astro";
+import FAQ from "~/components/FAQ.astro";
+import ContactForm from "~/components/ContactForm.astro";
+
+const faq = [
+  {
+    q: "Kolik GEO/SEO audit stojí?",
+    a: "Jednorázová cena podle rozsahu webu (orientačně jednotky až nižší desítky tisíc Kč). Přesnou nabídku dostanete po krátké poptávce — řekneme rovnou cenu i termín, žádné mlhavé nabídky naslepo.",
+  },
+  {
+    q: "Co konkrétně dostanu?",
+    a: "Dokument s prioritizovanou roadmapou (co řešit první podle dopadu × náročnosti) + debrief call nad vaším webem. Žádné obecné rady — konkrétní kroky pro váš web.",
+  },
+  {
+    q: "Jak dlouho audit trvá?",
+    a: "Typicky výstup do několika pracovních dnů od dodání přístupů a zadání. Termín potvrdíme při poptávce.",
+  },
+  {
+    q: "Musím pak objednat i realizaci?",
+    a: "Ne. Audit je samostatný produkt. Na realizaci navazujeme jen pokud chcete — máme na ni 4 dlouhodobé služby, ale plán si můžete udělat i sami.",
+  },
+];
+---
+
+<PageLayout
+  title="GEO/SEO Audit — zjistěte, proč vás AI necituje | geo-seo.cz"
+  description="GEO/SEO Audit: konkrétní prioritizovaný plán, proč vás ChatGPT, Perplexity a Google AI necitují a co řešit první. Výstup + debrief call od Sniper Design."
+  eyebrow="GEO/SEO Audit"
+  heading="GEO/SEO Audit — zjistěte, <strong>proč vás AI necituje</strong>"
+  lead="Konkrétní prioritizovaný plán, ne obecné rady. Zjistíte, kde váš web stojí v AI viditelnosti a co řešit jako první."
+  crumbs={[{ label: "Služby", href: "/sluzby/" }, { label: "GEO/SEO Audit" }]}
+>
+  <Section>
+    <Container size="prose">
+      <AnswerBlock
+        label="Co je audit"
+        text="<strong>GEO/SEO Audit</strong> manuálně prověří, jak vás citují ChatGPT, Perplexity a Google AI Overviews, v jakém stavu je váš SEO základ a jak je obsah připravený na citace. Výstup je prioritizovaná roadmapa — co řešit první podle dopadu a náročnosti."
+      />
+
+      <Prose class="mt">
+        <h2>Co audit obsahuje</h2>
+        <ul>
+          <li><strong>Citovatelnost v AI</strong> — kde už vás zmiňují ChatGPT / Perplexity / Google AIO na klíčové oborové dotazy a kde je konkurence.</li>
+          <li><strong>SEO základ</strong> — indexovatelnost, technické zdraví, struktura (bez něj GEO nefunguje).</li>
+          <li><strong>GEO připravenost obsahu</strong> — answer blocky, fact-density, FAQ, schema, přístup AI crawlerů.</li>
+          <li><strong>Prioritizovaná roadmapa</strong> — co řešit první, odhad dopadu × náročnosti.</li>
+          <li><strong>Debrief call</strong> nad konkrétním webem.</li>
+        </ul>
+
+        <h2>Pro koho</h2>
+        <p>
+          Firmy, e-shopy a B2B brandy, které vidí, že je AI necituje, a chtějí vědět, kde stojí,
+          <strong>než investují</strong> do realizace.
+        </p>
+
+        <h2>Co následuje po auditu</h2>
+        <p>
+          Audit je „noha ve dveřích". Pokud chcete plán i zrealizovat, navazují 4 dlouhodobé služby:
+          <a href="/sluzby/dlouhodobe-seo/">dlouhodobé SEO</a>,
+          <a href="/sluzby/geo-obsah/">GEO obsah</a>,
+          <a href="/sluzby/technicka-uprava/">technická úprava</a> a
+          <a href="/sluzby/sprava-geo/">správa GEO</a>.
+        </p>
+      </Prose>
+    </Container>
+  </Section>
+
+  <Section bg="deep">
+    <Container size="prose">
+      <h2 class="form-title">Objednat GEO audit</h2>
+      <p class="form-sub">Napište nám pár řádků o webu — ozveme se s cenou a termínem (obvykle do 24 hodin v pracovní dny).</p>
+      <ContactForm source="geo-seo-audit" submitLabel="Odeslat poptávku auditu" />
+    </Container>
+  </Section>
+
+  <Section>
+    <Container size="prose">
+      <FAQ title="Časté otázky k auditu" items={faq} />
+    </Container>
+  </Section>
+</PageLayout>
+
+<style>
+  .mt { margin-top: 2rem; }
+  .form-title { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; }
+  .form-sub { margin: 0.6rem 0 1.5rem; color: var(--color-ink-muted); max-width: 34rem; line-height: 1.6; }
+</style>

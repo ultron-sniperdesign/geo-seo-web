@@ -1,0 +1,65 @@
+---
+import PageLayout from "~/layouts/PageLayout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import AnswerBlock from "~/components/AnswerBlock.astro";
+import Prose from "~/components/Prose.astro";
+import CTABanner from "~/components/CTABanner.astro";
+---
+
+<PageLayout
+  title="Platformy: optimalizace pro ChatGPT, Perplexity a Google AI | geo-seo.cz"
+  description="Každá AI platforma vybírá zdroje jinak. Jak se dostat do odpovědí ChatGPT, Perplexity, Google AI Overviews a dalších generativních enginů."
+  eyebrow="Platformy"
+  heading="Každá AI vybírá zdroje <strong>jinak</strong>"
+  lead="ChatGPT, Perplexity i Google AI fungují odlišně. Tady je rychlý přehled, co u které platformy rozhoduje o citaci."
+  crumbs={[{ label: "Platformy" }]}
+>
+  <Section>
+    <Container size="prose">
+      <AnswerBlock
+        text="Generativní platformy se liší v tom, odkud berou zdroje: <strong>ChatGPT</strong> staví hodně na Bing indexu a povoleném GPTBotu, <strong>Perplexity</strong> má vlastní index a preferuje čerstvý obsah, <strong>Google AI Overviews</strong> stojí na klasickém organiku. Optimalizace pro AI proto začíná u silného SEO základu a citovatelné struktury."
+      />
+      <Prose class="mt">
+        <h2>ChatGPT</h2>
+        <p>
+          Vyhledávací odpovědi ChatGPT stojí na Bing indexu a procházení přes <strong>GPTBot</strong>.
+          Prakticky to znamená: být v Bingu, mít povoleného crawlera a citovatelnou strukturu.
+          Pozice v Googlu samotnou citaci nezaručí.
+        </p>
+        <h2>Perplexity</h2>
+        <p>
+          Perplexity má vlastní index, transparentně uvádí citace a má silný <strong>recency
+          boost</strong> — nový a aktualizovaný obsah cituje rychle. Freshness se tu vyplácí.
+        </p>
+        <h2>Google AI Overviews a AI Mode</h2>
+        <p>
+          Google generuje odpovědi nad klasickým organickým indexem. <strong>Silné SEO je
+          vstupenka</strong> — bez dobrých pozic se do AI Overviews těžko dostanete.
+        </p>
+        <h2>Claude, Gemini, Copilot</h2>
+        <p>
+          Ostatní asistenti mají vlastní specifika výběru zdrojů, ale principy GEO (citovatelná
+          struktura, autorita, technická čitelnost) platí napříč. Detail v <a href="/geo-navod/">GEO návodu</a>.
+        </p>
+      </Prose>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <CTABanner
+        title="Chcete pokrýt <strong>všechny platformy</strong>?"
+        text="Audit ukáže, u kterých platforem zaostáváte a co řešit první."
+        primaryLabel="Objednat GEO audit"
+        primaryHref="/audit/"
+        secondaryLabel="GEO návod →"
+        secondaryHref="/geo-navod/"
+      />
+    </Container>
+  </Section>
+</PageLayout>
+
+<style>
+  .mt { margin-top: 2rem; }
+</style>

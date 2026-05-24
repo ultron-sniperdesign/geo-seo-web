@@ -1,0 +1,101 @@
+---
+/**
+ * ContactForm.astro — poptávkový formulář (Audit / Kontakt). POST JSON na
+ * sdílený Cloudflare Worker ekosystému (reuse, ne nový backend). Honeypot proti
+ * botům. Progressive enhancement: bez JS nativní POST, s JS fetch + redirect.
+ *
+ * Worker kontrakt (shodný s aiseo): pole jmeno, email, url, cil, gdpr, website
+ * (honeypot) + source pro rozlišení projektu.
+ */
+import FormField from "~/components/FormField.astro";
+import Button from "~/components/Button.astro";
+
+interface Props {
+  source?: string;
+  endpoint?: string;
+  submitLabel?: string;
+}
+const {
+  source = "geo-seo",
+  endpoint = "https://aiseo-pack-webhook.aiseo-optimalizace.workers.dev/audit-inquiry",
+  submitLabel = "Odeslat poptávku",
+} = Astro.props;
+---
+
+<form class="cform" method="post" action={endpoint} data-source={source} novalidate>
+  {/* Honeypot — boti vyplní vše, lidé to nevidí; Worker submission s tímto polem zahodí. */}
+  <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="cform__hp" />
+
+  <div class="cform__grid">
+    <FormField name="jmeno" label="Jméno" required autocomplete="name" placeholder="Jan Novák" />
+    <FormField name="email" label="E-mail" type="email" required autocomplete="email" placeholder="jan@firma.cz" />
+  </div>
+  <FormField name="url" label="Web / e-shop" type="url" placeholder="https://vasweb.cz" />
+  <FormField name="cil" label="S čím potřebujete pomoct?" type="textarea" placeholder="Krátce popište, co řešíte…" />
+
+  <label class="cform__gdpr">
+    <input type="checkbox" name="gdpr" required />
+    <span>Souhlasím se zpracováním údajů dle <a href="/gdpr/">zásad GDPR</a>.</span>
+  </label>
+
+  <div class="cform__submit">
+    <Button variant="primary" size="lg" type="submit" arrow>{submitLabel}</Button>
+  </div>
+  <p class="cform__error" data-error hidden></p>
+</form>
+
+<script>
+  document.querySelectorAll(".cform").forEach((form) => {
+    const f = form as HTMLFormElement;
+    const errorEl = f.querySelector("[data-error]") as HTMLElement | null;
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!f.checkValidity()) {
+        f.reportValidity();
+        return;
+      }
+      if (errorEl) errorEl.hidden = true;
+      const btn = f.querySelector("button[type=submit]") as HTMLButtonElement | null;
+      if (btn) btn.disabled = true;
+      const fd = new FormData(f);
+      const data = {
+        source: f.dataset.source || "geo-seo",
+        jmeno: String(fd.get("jmeno") || "").trim(),
+        email: String(fd.get("email") || "").trim(),
+        url: String(fd.get("url") || "").trim(),
+        cil: String(fd.get("cil") || "").trim(),
+        gdpr: fd.get("gdpr") === "on",
+        website: String(fd.get("website") || ""),
+      };
+      try {
+        const res = await fetch(f.action, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error(`Server ${res.status}`);
+        window.location.assign("/dekujeme/");
+      } catch (err) {
+        console.error("ContactForm submit failed", err);
+        if (errorEl) {
+          errorEl.textContent =
+            "Odeslání se nezdařilo. Zkuste to prosím znovu, nebo napište na aiseo-optimalizace@sniperdesign.cz.";
+          errorEl.hidden = false;
+        }
+        if (btn) btn.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  .cform { display: grid; gap: 1.1rem; max-width: 34rem; }
+  .cform__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .cform__grid { display: grid; gap: 1.1rem; }
+  @media (min-width: 560px) { .cform__grid { grid-template-columns: 1fr 1fr; } }
+  .cform__gdpr { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.85rem; color: var(--color-ink-muted); line-height: 1.5; }
+  .cform__gdpr input { margin-top: 0.2rem; accent-color: var(--color-accent); }
+  .cform__gdpr a { color: var(--color-accent-strong); text-decoration: underline; }
+  .cform__submit { margin-top: 0.25rem; }
+  .cform__error { margin: 0; font-size: 0.9rem; color: var(--color-signal); }
+</style>

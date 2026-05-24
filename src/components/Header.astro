@@ -1,0 +1,60 @@
+---
+/**
+ * Header.astro — sticky hlavička: Logo + hlavní nav + CTA na Audit.
+ * Mobil: nav skrytá (MobileNav drawer doplním později), Logo + CTA zůstávají.
+ */
+import Logo from "~/components/Logo.astro";
+import Button from "~/components/Button.astro";
+import Container from "~/components/Container.astro";
+
+const nav = [
+  { label: "Co je GEO", href: "/co-je-geo/" },
+  { label: "GEO návod", href: "/geo-navod/" },
+  { label: "Platformy", href: "/platformy/" },
+  { label: "Služby", href: "/sluzby/" },
+  { label: "Blog", href: "/blog/" },
+];
+---
+
+<header class="header">
+  <Container>
+    <div class="header__bar">
+      <Logo />
+      <nav class="header__nav" aria-label="Hlavní navigace">
+        {nav.map((item) => <a class="header__link" href={item.href}>{item.label}</a>)}
+      </nav>
+      <div class="header__actions">
+        <Button variant="primary" size="sm" href="/audit/" arrow>Objednat GEO audit</Button>
+      </div>
+    </div>
+  </Container>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: oklch(from var(--color-paper) l c h / 0.82);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .header__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 4rem;
+  }
+  .header__nav { display: none; gap: 1.75rem; }
+  .header__link {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-ink-muted);
+    transition: color var(--dur-base) var(--ease-out);
+  }
+  .header__link:hover { color: var(--color-accent-strong); }
+  @media (min-width: 900px) {
+    .header__nav { display: flex; }
+  }
+</style>

@@ -1,0 +1,74 @@
+---
+import PageLayout from "~/layouts/PageLayout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import ContactForm from "~/components/ContactForm.astro";
+import AuthorityStrip from "~/components/AuthorityStrip.astro";
+---
+
+<PageLayout
+  title="Kontakt — GEO/SEO Audit a služby | geo-seo.cz"
+  description="Napište nám poptávku na GEO/SEO audit nebo služby. Za webem stojí agentura Sniper Design (CPU s.r.o.) — ozýváme se do 24 hodin v pracovní dny."
+  eyebrow="Kontakt"
+  heading="Pojďme se <strong>bavit o vaší AI viditelnosti</strong>"
+  lead="Napište pár řádků o webu a s čím potřebujete pomoct. Ozveme se obvykle do 24 hodin v pracovní dny."
+  crumbs={[{ label: "Kontakt" }]}
+>
+  <Section>
+    <Container>
+      <div class="kontakt__grid">
+        <div>
+          <ContactForm source="geo-seo-kontakt" submitLabel="Odeslat poptávku" />
+        </div>
+        <aside class="kontakt__direct">
+          <h2>Přímý kontakt</h2>
+          <dl>
+            <div>
+              <dt>E-mail</dt>
+              <dd><a href="mailto:aiseo-optimalizace@sniperdesign.cz">aiseo-optimalizace@sniperdesign.cz</a></dd>
+            </div>
+            <div>
+              <dt>Telefon</dt>
+              <dd><a href="tel:+420775181634">+420&nbsp;775&nbsp;181&nbsp;634</a> <span>(Po–Pá 9–17)</span></dd>
+            </div>
+            <div>
+              <dt>Provozovatel</dt>
+              <dd>CPU s.r.o. · IČO 08125163 · plátce DPH</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </Container>
+  </Section>
+
+  <Section bg="deep">
+    <Container>
+      <AuthorityStrip />
+    </Container>
+  </Section>
+</PageLayout>
+
+<style>
+  .kontakt__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+  .kontakt__direct h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; }
+  .kontakt__direct dl { margin: 0; display: grid; gap: 1rem; }
+  .kontakt__direct dt {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+    margin-bottom: 0.2rem;
+  }
+  .kontakt__direct dd { margin: 0; font-size: 0.95rem; color: var(--color-ink); }
+  .kontakt__direct dd a { color: var(--color-accent-strong); text-decoration: underline; text-underline-offset: 2px; }
+  .kontakt__direct dd span { color: var(--color-ink-faint); font-size: 0.85rem; }
+  @media (min-width: 860px) {
+    .kontakt__grid { grid-template-columns: 1.5fr 1fr; }
+  }
+</style>

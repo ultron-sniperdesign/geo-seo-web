@@ -1,0 +1,154 @@
+---
+/**
+ * Hero.astro (homepage) — informačně bohatý rozcestník. H1 vždy "GEO SEO".
+ * 2 sloupce: obsah + vizuál (mockup AI odpovědi, kde je citovaný geo-seo.cz).
+ * 2 CTA + quick-links do více sekcí (design mantinel: hero odvádí do sekcí).
+ */
+import Container from "~/components/Container.astro";
+import Section from "~/components/Section.astro";
+import Button from "~/components/Button.astro";
+
+const quickLinks = [
+  { label: "Co je GEO", href: "/co-je-geo/" },
+  { label: "GEO návod", href: "/geo-navod/" },
+  { label: "Platformy", href: "/platformy/" },
+];
+---
+
+<Section class="hero">
+  <Container>
+    <div class="hero__grid">
+      <div class="hero__content">
+        <span class="hero__eyebrow">Generative Engine Optimization</span>
+        <h1 class="hero__title">
+          GEO SEO: dostaňte se do <span class="hero__hl">odpovědí&nbsp;AI</span>
+        </h1>
+        <p class="hero__lead">
+          Klasické SEO řeší pozice v&nbsp;Googlu. <strong>GEO (Generative Engine
+          Optimization)</strong> řeší, jestli vás zmíní a&nbsp;ocituje ChatGPT,
+          Perplexity a&nbsp;Google AI&nbsp;Overviews. Ukážeme vám, jak na&nbsp;to —
+          nebo to uděláme za&nbsp;vás.
+        </p>
+        <div class="hero__cta">
+          <Button variant="primary" size="lg" href="/audit/" arrow>Objednat GEO audit</Button>
+          <Button variant="secondary" size="lg" href="/co-je-geo/">Co je GEO SEO</Button>
+        </div>
+        <div class="hero__quick">
+          <span class="hero__quick-label">Kam dál:</span>
+          {quickLinks.map((l) => <a class="hero__chip" href={l.href}>{l.label}</a>)}
+        </div>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="answer-card">
+          <div class="answer-card__head">
+            <span class="answer-card__avatar">AI</span>
+            <span>Odpověď</span>
+          </div>
+          <div class="answer-card__lines">
+            <span></span><span></span><span class="is-short"></span>
+          </div>
+          <div class="answer-card__cite">
+            <span class="answer-card__cite-label">Zdroj</span>
+            <span class="answer-card__chip">geo-seo.cz</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .hero { position: relative; overflow: hidden; }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: -25% -10% auto auto;
+    width: 40rem;
+    height: 40rem;
+    background: radial-gradient(circle, var(--color-accent-tint), transparent 62%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .hero__content { max-width: 40rem; }
+  .hero__eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-strong);
+    margin-bottom: 1rem;
+  }
+  .hero__title { font-size: clamp(2.1rem, 5.5vw, 3.6rem); font-weight: 700; }
+  .hero__hl { color: var(--color-accent-strong); }
+  .hero__lead {
+    margin: 1.4rem 0 0;
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+  .hero__lead strong { color: var(--color-ink); font-weight: 600; }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: 0.875rem; margin-top: 2rem; }
+  .hero__quick { display: flex; flex-wrap: wrap; align-items: center; gap: 0.625rem; margin-top: 2rem; }
+  .hero__quick-label { font-size: 0.85rem; color: var(--color-ink-faint); }
+  .hero__chip {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--color-ink-muted);
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--color-rule-strong);
+    border-radius: var(--radius-pill);
+    transition: border-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
+  }
+  .hero__chip:hover { border-color: var(--color-accent); color: var(--color-accent-strong); background: var(--color-accent-tint); }
+
+  /* Vizuál — mockup AI odpovědi s citací geo-seo.cz */
+  .hero__visual { display: flex; justify-content: center; }
+  .answer-card {
+    width: 100%;
+    max-width: 24rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card-hover);
+    padding: 1.5rem;
+  }
+  .answer-card__head { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; color: var(--color-ink); }
+  .answer-card__avatar {
+    display: grid; place-items: center;
+    width: 1.75rem; height: 1.75rem;
+    border-radius: var(--radius-md);
+    background: var(--color-accent); color: #fff;
+    font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+  }
+  .answer-card__lines { display: grid; gap: 0.6rem; margin: 1.25rem 0; }
+  .answer-card__lines span { height: 0.7rem; border-radius: var(--radius-sm); background: var(--color-paper-hover); }
+  .answer-card__lines .is-short { width: 60%; }
+  .answer-card__cite {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding-top: 1rem; border-top: 1px dashed var(--color-rule);
+  }
+  .answer-card__cite-label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-faint); }
+  .answer-card__chip {
+    font-size: 0.85rem; font-weight: 600;
+    color: var(--color-accent-strong);
+    background: var(--color-accent-tint);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    padding: 0.25rem 0.7rem;
+  }
+
+  @media (min-width: 900px) {
+    .hero__grid { grid-template-columns: 1.15fr 0.85fr; }
+  }
+</style>

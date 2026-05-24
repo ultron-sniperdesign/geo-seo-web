@@ -1,0 +1,28 @@
+---
+/**
+ * PageLayout.astro (L2) — vnitřní stránky: BaseLayout + PageHeader + slot.
+ * `title` = SEO <title> (SERP), `heading` = H1 (může být lidštější — decoupling).
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PageHeader from "~/components/PageHeader.astro";
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  title: string;
+  description?: string;
+  eyebrow?: string;
+  heading: string;
+  lead?: string;
+  crumbs?: Crumb[];
+  image?: string;
+}
+const { title, description, eyebrow, heading, lead, crumbs = [], image } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} image={image}>
+  <PageHeader eyebrow={eyebrow} title={heading} lead={lead} crumbs={crumbs} />
+  <slot />
+</BaseLayout>

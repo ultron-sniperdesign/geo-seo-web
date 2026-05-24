@@ -1,0 +1,73 @@
+# Build outputs
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.production
+.env.local
+.env.*.local
+
+# Node / npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor metadata
+.DS_Store
+Icon
+Icon?
+._*
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# macOS Finder Icon resource fork (also inside .git/, see runbook §9)
+.git/refs/heads/Icon
+.git/Icon
+
+# Build artefakty
+.deploy-staging/
+release_local/
+*.tsbuildinfo
+
+# Local Claude session artefakty (per-session, ne pro repo)
+.claude/
+
+# Marketing research výstupy (lokální, ne pro repo)
+_research/
+
+# Local design experimenty (mimo TS/build scope)
+_design/
+public/og/_drafts/
+
+# Research output (lokální data, ne součást webu)
+Research interbetu AI SEO/
+_research/
+
+# Hotové PDF produkty pro prodej (lokální, ne součást webu)
+PDF na prodej/
+_source/products/pack/output/
+
+# IndexNow cache MUSÍ být commitnutá (CI build je ephemeral — bez cache by se
+# každý build chápal jako první a re-submitoval všechny URL na IndexNow).
+!.astro-indexnow-cache.json
+
+# === geo-seo interní plánovací docs (NEpatří do public repa — obsahují strategii) ===
+/PROJECT_BRIEF.md
+/SESSION_KICKOFF.md
+/CONTENT_BRIEFS.md
+/MENU_IA.md
+/SLUZBY.md
+/TECH_SETUP.md
+/keyword-data.md
+/obsahovy-plan.csv
+/README.md
+/_source/
+/CLAUDE.md
+/_aiseo_archive/
+/marketing/

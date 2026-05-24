@@ -1,0 +1,28 @@
+---
+import PageLayout from "~/layouts/PageLayout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import Prose from "~/components/Prose.astro";
+import Button from "~/components/Button.astro";
+---
+
+<PageLayout
+  title="Děkujeme — ozveme se | geo-seo.cz"
+  description="Vaše poptávka dorazila. Ozveme se obvykle do 24 hodin v pracovní dny."
+  eyebrow="Poptávka odeslána"
+  heading="Děkujeme — <strong>ozveme se</strong>"
+  lead="Vaše poptávka dorazila. Obvykle se ozýváme do 24 hodin v pracovní dny."
+>
+  <Section>
+    <Container size="prose">
+      <Prose>
+        <p>
+          Mezitím se můžete podívat, jak GEO funguje, v <a href="/geo-navod/">GEO návodu</a>,
+          nebo si přečíst <a href="/co-je-geo/">co je GEO</a>. Pokud něco hoří, napište přímo
+          na <a href="mailto:aiseo-optimalizace@sniperdesign.cz">aiseo-optimalizace@sniperdesign.cz</a>.
+        </p>
+      </Prose>
+      <Button variant="secondary" size="md" href="/" arrow>Zpět na úvod</Button>
+    </Container>
+  </Section>
+</PageLayout>

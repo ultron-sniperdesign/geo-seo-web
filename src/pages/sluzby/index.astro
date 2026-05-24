@@ -1,0 +1,36 @@
+---
+import PageLayout from "~/layouts/PageLayout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import ServiceCard from "~/components/ServiceCard.astro";
+import { services } from "~/data/services";
+---
+
+<PageLayout
+  title="Služby — GEO/SEO Audit a 4 navazující služby | geo-seo.cz"
+  description="Vstupní produkt je GEO/SEO Audit. Na něj navazují dlouhodobé SEO, GEO obsah, technická úprava a správa GEO. Od auditu k realizaci."
+  eyebrow="Služby"
+  heading="Od auditu k <strong>realizaci</strong>"
+  lead="Vstupní produkt je Audit — zjistíte, kde stojíte. Na něj navazují 4 dlouhodobé služby."
+  crumbs={[{ label: "Služby" }]}
+>
+  <Section>
+    <Container>
+      <div class="services-grid">
+        {services.map((s) => (
+          <ServiceCard title={s.title} blurb={s.blurb} href={s.href} featured={s.featured} tag={s.tag} />
+        ))}
+      </div>
+    </Container>
+  </Section>
+</PageLayout>
+
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 620px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+</style>

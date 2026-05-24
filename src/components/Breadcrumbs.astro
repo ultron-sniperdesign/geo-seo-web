@@ -1,0 +1,40 @@
+---
+/**
+ * Breadcrumbs.astro — drobečková navigace. Vždy začíná „Úvod" (/).
+ * Poslední položka bez href = aktuální stránka.
+ */
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  items: Crumb[];
+}
+const { items } = Astro.props;
+---
+
+<nav class="crumbs" aria-label="Drobečková navigace">
+  <a href="/">Úvod</a>
+  {items.map((c) => (
+    <span class="crumbs__item">
+      <span class="crumbs__sep" aria-hidden="true">/</span>
+      {c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+    </span>
+  ))}
+</nav>
+
+<style>
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--color-ink-faint);
+  }
+  .crumbs a { color: var(--color-ink-muted); transition: color var(--dur-base) var(--ease-out); }
+  .crumbs a:hover { color: var(--color-accent-strong); }
+  .crumbs__item { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .crumbs__sep { color: var(--color-rule-strong); }
+  .crumbs [aria-current="page"] { color: var(--color-ink); font-weight: 500; }
+</style>

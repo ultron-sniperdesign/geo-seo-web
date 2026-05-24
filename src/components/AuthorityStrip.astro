@@ -1,0 +1,63 @@
+---
+/**
+ * AuthorityStrip.astro — E-E-A-T pás: Sniper Design + důvěryhodnostní body.
+ * Fakta z reálné agentury (CPU s.r.o.). Logo z public/sniperdesign/.
+ */
+const points = [
+  { strong: "Zlatý partner Upgates od 2016", note: "oficiální status" },
+  { strong: "600+ e-shopů", note: "zkušenost z českého trhu" },
+  { strong: "Vlastní e-shop MEGA DETAIL", note: "řešíme stejné problémy jako klienti" },
+  { strong: "Vlastní nástroje", note: "SYNKRO + GPTfeed" },
+];
+---
+
+<div class="authority">
+  <div class="authority__brand">
+    <img src="/sniperdesign/logo-brand.svg" alt="Sniper Design" width="170" height="34" loading="lazy" />
+    <p class="authority__lead">
+      Za webem stojí agentura <strong>Sniper Design</strong> (CPU&nbsp;s.r.o.) —
+      přes 10&nbsp;let praxe s&nbsp;českými e-shopy. Učíme a&nbsp;prodáváme to,
+      co denně řešíme v&nbsp;klientských auditech a&nbsp;implementacích.
+    </p>
+  </div>
+  <ul class="authority__points">
+    {points.map((p) => (
+      <li>
+        <strong>{p.strong}</strong>
+        <span>{p.note}</span>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .authority {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  .authority__brand img { height: 2rem; width: auto; margin-bottom: 1rem; }
+  .authority__lead {
+    margin: 0;
+    max-width: 32rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+  }
+  .authority__lead strong { color: var(--color-ink); font-weight: 600; }
+  .authority__points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .authority__points li { display: flex; flex-direction: column; gap: 0.2rem; }
+  .authority__points strong { font-size: 1rem; font-weight: 700; color: var(--color-ink); letter-spacing: -0.01em; }
+  .authority__points span { font-size: 0.85rem; color: var(--color-ink-faint); }
+  @media (min-width: 820px) {
+    .authority { grid-template-columns: 1.1fr 1fr; gap: 3rem; }
+  }
+</style>

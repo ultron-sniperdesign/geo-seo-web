@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="geo-seo.cz">
+  <g fill="#1FA06E">
+    <!-- AI sparkle (generativní) -->
+    <path d="M45 8 l3 7.5 7.5 3 -7.5 3 -3 7.5 -3 -7.5 -7.5 -3 7.5 -3 Z"/>
+    <!-- citační uvozovka 1 -->
+    <rect x="9" y="27" width="17" height="14" rx="4.5"/>
+    <path d="M12 40 h9 l-7 8 Z"/>
+    <!-- citační uvozovka 2 -->
+    <rect x="31" y="27" width="17" height="14" rx="4.5"/>
+    <path d="M34 40 h9 l-7 8 Z"/>
+  </g>
+</svg>

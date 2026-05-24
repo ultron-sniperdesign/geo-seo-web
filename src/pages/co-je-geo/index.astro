@@ -1,0 +1,117 @@
+---
+import PageLayout from "~/layouts/PageLayout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import AnswerBlock from "~/components/AnswerBlock.astro";
+import Prose from "~/components/Prose.astro";
+import FAQ from "~/components/FAQ.astro";
+import CTABanner from "~/components/CTABanner.astro";
+
+const faq = [
+  {
+    q: "Co je GEO jednoduše?",
+    a: "GEO (Generative Engine Optimization) je optimalizace obsahu tak, aby vás generativní AI — ChatGPT, Perplexity, Google AI Overviews — používala jako zdroj a citovala ve své odpovědi.",
+  },
+  {
+    q: "Jaký je rozdíl mezi GEO a SEO?",
+    a: "Klasické SEO cílí na pozice ve výsledcích vyhledávání. GEO cílí na to, aby vás AI zmínila a odkázala ve své vygenerované odpovědi. Signály se částečně překrývají, ale nejsou totožné.",
+  },
+  {
+    q: "Funguje GEO bez SEO základu?",
+    a: "Ne. Bez dobré indexace a technického zdraví vás AI většinou ani nenajde. SEO je foundace — GEO na ní staví. Proto řešíme obojí dohromady.",
+  },
+  {
+    q: "Jak dlouho trvá, než mě AI začne citovat?",
+    a: "Závisí na platformě a stavu webu. Perplexity reaguje na čerstvý obsah během dní, u ostatních platforem jde spíš o týdny až měsíce. Audit ukáže, co řešit jako první.",
+  },
+];
+---
+
+<PageLayout
+  title="Co je GEO (Generative Engine Optimization)? Vysvětlení a jak začít | geo-seo.cz"
+  description="GEO = optimalizace pro citace v AI. Čím se liší od SEO, proč vzniklo a jak se dostat do odpovědí ChatGPT, Perplexity a Google AI Overviews."
+  eyebrow="Co je GEO"
+  heading="Co je GEO (Generative Engine Optimization)"
+  lead="Optimalizace pro to, aby vás generativní AI <strong>citovala jako zdroj</strong>. Čím se liší od SEO, proč vzniklo a jak se do AI odpovědí dostat."
+  crumbs={[{ label: "Co je GEO" }]}
+>
+  <Section>
+    <Container size="prose">
+      <AnswerBlock
+        text="<strong>GEO (Generative Engine Optimization)</strong> je optimalizace obsahu tak, aby ho generativní AI — ChatGPT, Perplexity, Google AI Overviews — používala jako zdroj a citovala. Na rozdíl od klasického SEO, které cílí na pozice ve výsledcích, GEO cílí na to, aby vás AI zmínila ve své odpovědi."
+      />
+
+      <Prose class="mt">
+        <h2>GEO vs klasické SEO</h2>
+        <p>
+          SEO se ptá: <strong>na jaké pozici jsme ve výsledcích Googlu?</strong> GEO se ptá:
+          <strong>zmíní nás AI ve své odpovědi a odkáže na nás?</strong> Klasické vyhledávání
+          vrací deset modrých odkazů; generativní AI vrátí jednu odpověď a v ní pár citací.
+          Cílem GEO je být jednou z těch citací.
+        </p>
+        <p>
+          Signály se částečně překrývají (autorita, struktura, technické zdraví), ale GEO přidává
+          vlastní: citovatelné krátké odpovědi, fact-density, strukturovaná data a přístup pro
+          AI crawlery (GPTBot, ClaudeBot, PerplexityBot).
+        </p>
+
+        <h2>Proč GEO vzniklo</h2>
+        <p>
+          Chování uživatelů se mění — místo „vygooglím a proklikám" se stále častěji ptají AI a
+          přečtou si shrnutí. ChatGPT, Perplexity i Google AI Overviews odpovídají rovnou a
+          zdroje uvádějí jako citace. Kdo v těch citacích není, pro tu část publika prakticky
+          neexistuje. Termín GEO pochází z akademického prostředí (Princeton, 2023) a v Česku
+          jeho hledanost meziročně prudce roste.
+        </p>
+
+        <h2>Jak AI vybírá, koho cituje</h2>
+        <p>
+          Generativní enginy nejdřív vyhledají relevantní zdroje (ChatGPT staví na Bing indexu,
+          Perplexity má vlastní index) a pak z nich poskládají odpověď. Pravděpodobnost citace
+          zvyšuje: jasná struktura a krátké odpovědi, věcná hustota (čísla, datace, zdroje),
+          autorita a zmínky na třetích stranách, a čerstvost obsahu. Detailní playbook najdete
+          v <a href="/geo-navod/">GEO návodu</a>.
+        </p>
+
+        <h2>GEO, AEO, AIO — kde jsou hranice</h2>
+        <p>
+          GEO je jedna z disciplín „AI éry vyhledávání" vedle AEO (Answer Engine Optimization)
+          a AIO. Pokud chcete přehled celého spektra, máme ho na sesterském webu
+          <a href="https://aiseo-optimalizace.cz/seo-vs-geo-vs-aeo-vs-aio/" target="_blank" rel="noopener">aiseo-optimalizace.cz</a>.
+          Tady jdeme do hloubky jen v GEO.
+        </p>
+
+        <h2>Co s tím dál</h2>
+        <p>
+          Pokud chcete vědět <strong>jak na to prakticky</strong>, pokračujte
+          <a href="/geo-navod/">GEO návodem</a>. Pokud chcete vědět, <strong>kde konkrétně
+          váš web stojí</strong> a co řešit první, udělá to za vás
+          <a href="/audit/">GEO/SEO Audit</a>.
+        </p>
+      </Prose>
+    </Container>
+  </Section>
+
+  <Section bg="deep">
+    <Container size="prose">
+      <FAQ title="Časté otázky ke GEO" items={faq} />
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <CTABanner
+        title="Chcete vědět, jestli vás AI <strong>cituje</strong>?"
+        text="GEO/SEO Audit ukáže, kde váš web stojí v AI viditelnosti a co řešit jako první."
+        primaryLabel="Objednat GEO audit"
+        primaryHref="/audit/"
+        secondaryLabel="Pokračovat na GEO návod →"
+        secondaryHref="/geo-navod/"
+      />
+    </Container>
+  </Section>
+</PageLayout>
+
+<style>
+  .mt { margin-top: 2rem; }
+</style>

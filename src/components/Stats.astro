@@ -1,0 +1,54 @@
+---
+/**
+ * Stats.astro — 3–4 KPI dlaždice (číslo + popisek). Pro "Proč teď" datový tah.
+ */
+interface StatItem {
+  value: string;
+  label: string;
+}
+interface Props {
+  items: StatItem[];
+}
+const { items } = Astro.props;
+---
+
+<dl class="stats">
+  {items.map((s) => (
+    <div class="stat">
+      <dt class="stat__value tnum">{s.value}</dt>
+      <dd class="stat__label">{s.label}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 1.25rem;
+    margin: 0;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-accent);
+  }
+  .stat__value {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-accent-strong);
+    letter-spacing: -0.02em;
+  }
+  .stat__label {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--color-ink-muted);
+  }
+  @media (min-width: 760px) {
+    .stats { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>
