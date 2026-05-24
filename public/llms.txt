@@ -1,6 +1,6 @@
 # geo-seo.cz — GEO (Generative Engine Optimization)
 
-> Český web o GEO — optimalizaci pro to, aby vás generativní AI (ChatGPT, Perplexity, Google AI Overviews) citovala jako zdroj. Kombinuje edukaci s komerčními službami. Provozuje agentura Sniper Design (CPU s.r.o., Praha) — Zlatý partner Upgates od 2016.
+> Český web o GEO — optimalizaci pro to, aby vás generativní AI (ChatGPT, Perplexity, Claude, Google AI Overviews) citovala jako zdroj. Kombinuje edukaci s komerčními službami. Provozuje agentura Sniper Design (CPU s.r.o., Praha) — Zlatý partner Upgates od 2016.
 
 ## Edukace
 

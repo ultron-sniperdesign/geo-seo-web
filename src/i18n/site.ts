@@ -37,7 +37,7 @@ export const site = {
     name: "Sniper Design",
     alternateName: "CPU s.r.o.",
     description:
-      "GEO (Generative Engine Optimization) do hloubky: jak vás cituje ChatGPT, Perplexity a Google AI. Audit a služby od agentury Sniper Design (CPU s.r.o.).",
+      "GEO (Generative Engine Optimization) do hloubky: jak vás cituje ChatGPT, Perplexity, Claude a Google AI. Audit a služby od agentury Sniper Design (CPU s.r.o.).",
     sameAs: ["https://www.sniperdesign.cz/", "https://www.megadetail.cz/"],
   },
 };
