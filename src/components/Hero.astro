@@ -40,6 +40,13 @@ const quickLinks = [
       </div>
 
       <div class="hero__visual" aria-hidden="true">
+        <div class="visual-cue">
+          <p class="visual-cue__label">Jak funguje <strong>GEO&nbsp;SEO</strong> v&nbsp;praxi</p>
+          <svg class="visual-cue__arrow" viewBox="0 0 50 54" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <path d="M25 5 C 13 17, 37 27, 25 43" />
+            <path d="M25 43 l -8 -8 M25 43 l 8 -8" />
+          </svg>
+        </div>
         <figure class="chat">
           <div class="chat__head">
             <span class="chat__avatar">
@@ -127,7 +134,18 @@ const quickLinks = [
   .hero__chip:hover { border-color: var(--color-accent); color: var(--color-accent-strong); background: var(--color-accent-tint); }
 
   /* Vizuál — chat scéna „dotaz → odpověď AI → odkaz geo-seo.cz" (předloha: v4-phone-final) */
-  .hero__visual { display: flex; justify-content: center; }
+  .hero__visual { display: flex; flex-direction: column; align-items: center; }
+
+  /* Popisek + šipka — jasně upozorní, co ukázka představuje */
+  .visual-cue {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 0.1rem;
+    margin-bottom: 0.35rem;
+    text-align: center;
+  }
+  .visual-cue__label { margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--color-ink); }
+  .visual-cue__label strong { color: var(--color-accent-strong); font-weight: 700; }
+  .visual-cue__arrow { width: 2.75rem; height: 3rem; color: var(--color-accent-strong); }
   .chat {
     /* Lokální „chatová" modrá (scoped) — záměrně NE konverzní zelená,
        aby zelená zůstala akční/brand barvou a web získal druhý odstín. */
