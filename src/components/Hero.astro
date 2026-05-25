@@ -1,7 +1,7 @@
 ---
 /**
  * Hero.astro (homepage) — informačně bohatý rozcestník. H1 vždy "GEO SEO".
- * 2 sloupce: obsah + vizuál (mockup AI odpovědi, kde je citovaný geo-seo.cz).
+ * 2 sloupce: obsah + vizuál (CSS chat scéna: dotaz → odpověď AI s odkazem geo-seo.cz).
  * 2 CTA + quick-links do více sekcí (design mantinel: hero odvádí do sekcí).
  */
 import Container from "~/components/Container.astro";
@@ -40,19 +40,33 @@ const quickLinks = [
       </div>
 
       <div class="hero__visual" aria-hidden="true">
-        <div class="answer-card">
-          <div class="answer-card__head">
-            <span class="answer-card__avatar">AI</span>
-            <span>Odpověď</span>
+        <figure class="chat">
+          <div class="chat__head">
+            <span class="chat__avatar">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M12 2l1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2Z" />
+                <path d="M18.5 13l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9.9-2.4Z" />
+              </svg>
+            </span>
+            <span class="chat__name">Odpověď&nbsp;AI</span>
+            <span class="chat__tag">ukázka</span>
           </div>
-          <div class="answer-card__lines">
-            <span></span><span></span><span class="is-short"></span>
+          <div class="chat__thread">
+            <p class="chat__bubble chat__bubble--user">Jak se dostat do&nbsp;odpovědí&nbsp;AI?</p>
+            <p class="chat__bubble chat__bubble--ai">
+              Zaměřte se na kvalitní obsah, který odpovídá na konkrétní dotazy lidí.
+              Pomůže vám to být vidět nejen ve&nbsp;vyhledávání, ale i&nbsp;v&nbsp;odpovědích&nbsp;AI.
+              Více tipů najdete na <span class="chat__link">geo‑seo.cz</span>
+              nebo si přečtěte <span class="chat__link chat__link--muted">návod na&nbsp;GEO&nbsp;SEO</span>.
+            </p>
           </div>
-          <div class="answer-card__cite">
-            <span class="answer-card__cite-label">Zdroj</span>
-            <span class="answer-card__chip">geo-seo.cz</span>
-          </div>
-        </div>
+          <figcaption class="chat__note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <path d="M12 19V5M12 5l-6 6M12 5l6 6" />
+            </svg>
+            <span><strong>Vaše značka</strong> se objeví přímo v&nbsp;odpovědi AI. Přesně to řeší GEO&nbsp;SEO.</span>
+          </figcaption>
+        </figure>
       </div>
     </div>
   </Container>
@@ -112,40 +126,106 @@ const quickLinks = [
   }
   .hero__chip:hover { border-color: var(--color-accent); color: var(--color-accent-strong); background: var(--color-accent-tint); }
 
-  /* Vizuál — mockup AI odpovědi s citací geo-seo.cz */
+  /* Vizuál — chat scéna „dotaz → odpověď AI → odkaz geo-seo.cz" (předloha: v4-phone-final) */
   .hero__visual { display: flex; justify-content: center; }
-  .answer-card {
+  .chat {
+    position: relative;
     width: 100%;
-    max-width: 24rem;
+    max-width: 23rem;
+    display: flex;
+    flex-direction: column;
     background: var(--color-paper);
     border: 1px solid var(--color-rule);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-card-hover);
-    padding: 1.5rem;
+    overflow: hidden;
+    animation: chat-float 7s ease-in-out infinite;
   }
-  .answer-card__head { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.95rem; color: var(--color-ink); }
-  .answer-card__avatar {
+
+  /* Hlavička chatu */
+  .chat__head {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.9rem 1.1rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .chat__avatar {
     display: grid; place-items: center;
-    width: 1.75rem; height: 1.75rem;
+    width: 2rem; height: 2rem;
     border-radius: var(--radius-md);
-    background: var(--color-accent-strong); color: #fff;
-    font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--color-accent-bright), var(--color-accent-strong));
+    color: #fff;
   }
-  .answer-card__lines { display: grid; gap: 0.6rem; margin: 1.25rem 0; }
-  .answer-card__lines span { height: 0.7rem; border-radius: var(--radius-sm); background: var(--color-paper-hover); }
-  .answer-card__lines .is-short { width: 60%; }
-  .answer-card__cite {
-    display: flex; align-items: center; gap: 0.5rem;
-    padding-top: 1rem; border-top: 1px dashed var(--color-rule);
-  }
-  .answer-card__cite-label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-faint); }
-  .answer-card__chip {
-    font-size: 0.85rem; font-weight: 600;
-    color: var(--color-accent-strong);
-    background: var(--color-accent-tint);
-    border: 1px solid var(--color-accent);
+  .chat__avatar svg { width: 1.1rem; height: 1.1rem; }
+  .chat__name { font-weight: 600; font-size: 0.95rem; color: var(--color-ink); }
+  .chat__tag {
+    margin-left: auto;
+    font-family: var(--font-mono); font-size: 0.6rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-ink-faint);
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--color-rule-strong);
     border-radius: var(--radius-pill);
-    padding: 0.25rem 0.7rem;
+  }
+
+  /* Vlákno zpráv */
+  .chat__thread {
+    display: flex; flex-direction: column; gap: 0.7rem;
+    padding: 1.1rem;
+    background: var(--color-paper-hover);
+  }
+  .chat__bubble {
+    margin: 0;
+    max-width: 85%;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem; line-height: 1.55;
+    border-radius: var(--radius-lg);
+  }
+  .chat__bubble--user {
+    align-self: flex-end;
+    background: var(--color-accent-strong); color: #fff;
+    border-bottom-right-radius: var(--radius-sm);
+    font-weight: 500;
+  }
+  .chat__bubble--ai {
+    align-self: flex-start;
+    background: var(--color-paper); color: var(--color-ink-muted);
+    border: 1px solid var(--color-rule);
+    border-bottom-left-radius: var(--radius-sm);
+  }
+  .chat__link {
+    font-weight: 600; color: var(--color-accent-strong);
+    text-decoration: underline; text-underline-offset: 2px;
+    text-decoration-color: var(--color-accent);
+    border-radius: var(--radius-sm);
+    padding: 0 0.14em;
+    background: var(--color-accent-tint);
+    white-space: nowrap;
+    animation: chat-glow 2.6s var(--ease-out) infinite;
+  }
+  .chat__link--muted { background: none; font-weight: 500; animation: none; white-space: normal; }
+
+  /* Vysvětlující popisek — z ukázky dělá diagram, ne živý chat */
+  .chat__note {
+    display: flex; align-items: flex-start; gap: 0.55rem;
+    margin: 0;
+    padding: 0.85rem 1.1rem;
+    border-top: 1px solid var(--color-rule);
+    font-size: 0.82rem; line-height: 1.45;
+    color: var(--color-ink-muted);
+  }
+  .chat__note svg { width: 1rem; height: 1rem; flex: none; margin-top: 0.1rem; color: var(--color-accent-strong); }
+  .chat__note strong { color: var(--color-ink); font-weight: 600; }
+
+  @keyframes chat-glow {
+    0%, 100% { box-shadow: 0 0 0 0 oklch(0.58 0.15 158 / 0.35); }
+    50% { box-shadow: 0 0 0 5px oklch(0.58 0.15 158 / 0); }
+  }
+  @keyframes chat-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chat, .chat__link { animation: none; }
   }
 
   @media (min-width: 900px) {
