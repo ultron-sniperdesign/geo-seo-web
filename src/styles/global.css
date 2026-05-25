@@ -12,15 +12,17 @@
   --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, ui-monospace, monospace;
 
-  /* Neutrály — světlý základ, jemně zelený tint (brand cohesion, ne studená modrá) */
-  --color-paper: oklch(0.99 0.005 155);
-  --color-paper-deep: oklch(0.97 0.008 155);
-  --color-paper-hover: oklch(0.95 0.011 155);
-  --color-ink: oklch(0.22 0.02 158);
-  --color-ink-muted: oklch(0.44 0.018 158);
-  --color-ink-faint: oklch(0.5 0.016 158);
-  --color-rule: oklch(0.9 0.012 155);
-  --color-rule-strong: oklch(0.82 0.015 155);
+  /* Neutrály — světlý základ, čistě šedé (saturace do černé, NE zelený tint).
+     Zelená zůstává jen jako akcent (CTA/odkazy/highlighty). Stejné světlosti
+     jako dřív, jen chroma 0. (rozhodnutí uživatele 2026-05-26) */
+  --color-paper: oklch(0.99 0 0);
+  --color-paper-deep: oklch(0.97 0 0);
+  --color-paper-hover: oklch(0.95 0 0);
+  --color-ink: oklch(0.22 0 0);
+  --color-ink-muted: oklch(0.44 0 0);
+  --color-ink-faint: oklch(0.5 0 0);
+  --color-rule: oklch(0.9 0 0);
+  --color-rule-strong: oklch(0.82 0 0);
 
   /* Akcent — GEO zelená (hlavní brand barva) */
   --color-accent: oklch(0.58 0.15 158);          /* UI prvky, borders, ikony, mark */
@@ -43,9 +45,9 @@
   --radius-xl: 1rem;
   --radius-pill: 999px;
 
-  /* Stíny — subtilní, hover lift (zelený nádech) → shadow-card / shadow-card-hover */
-  --shadow-card: 0 1px 2px oklch(0.22 0.02 158 / 0.06);
-  --shadow-card-hover: 0 10px 28px -14px oklch(0.46 0.16 158 / 0.28);
+  /* Stíny — subtilní, hover lift (neutrální šedá, BEZ zeleného nádechu) */
+  --shadow-card: 0 1px 2px oklch(0.22 0 0 / 0.07);
+  --shadow-card-hover: 0 10px 28px -14px oklch(0.3 0 0 / 0.22);
 
   /* Animace — timing/easing pro mikroanimace (BEZ reveal-on-scroll) */
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
