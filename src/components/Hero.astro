@@ -129,6 +129,13 @@ const quickLinks = [
   /* Vizuál — chat scéna „dotaz → odpověď AI → odkaz geo-seo.cz" (předloha: v4-phone-final) */
   .hero__visual { display: flex; justify-content: center; }
   .chat {
+    /* Lokální „chatová" modrá (scoped) — záměrně NE konverzní zelená,
+       aby zelená zůstala akční/brand barvou a web získal druhý odstín. */
+    --chat-blue: oklch(0.56 0.15 256);
+    --chat-blue-strong: oklch(0.47 0.16 258);
+    --chat-blue-bright: oklch(0.80 0.12 250);
+    --chat-blue-tint: oklch(0.95 0.035 255);
+
     position: relative;
     width: 100%;
     max-width: 23rem;
@@ -152,7 +159,7 @@ const quickLinks = [
     display: grid; place-items: center;
     width: 2rem; height: 2rem;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--color-accent-bright), var(--color-accent-strong));
+    background: linear-gradient(135deg, var(--chat-blue-bright), var(--chat-blue-strong));
     color: #fff;
   }
   .chat__avatar svg { width: 1.1rem; height: 1.1rem; }
@@ -182,7 +189,7 @@ const quickLinks = [
   }
   .chat__bubble--user {
     align-self: flex-end;
-    background: var(--color-accent-strong); color: #fff;
+    background: var(--chat-blue-strong); color: #fff;
     border-bottom-right-radius: var(--radius-sm);
     font-weight: 500;
   }
@@ -193,12 +200,12 @@ const quickLinks = [
     border-bottom-left-radius: var(--radius-sm);
   }
   .chat__link {
-    font-weight: 600; color: var(--color-accent-strong);
+    font-weight: 600; color: var(--chat-blue-strong);
     text-decoration: underline; text-underline-offset: 2px;
-    text-decoration-color: var(--color-accent);
+    text-decoration-color: var(--chat-blue);
     border-radius: var(--radius-sm);
     padding: 0 0.14em;
-    background: var(--color-accent-tint);
+    background: var(--chat-blue-tint);
     white-space: nowrap;
     animation: chat-glow 2.6s var(--ease-out) infinite;
   }
@@ -213,12 +220,12 @@ const quickLinks = [
     font-size: 0.82rem; line-height: 1.45;
     color: var(--color-ink-muted);
   }
-  .chat__note svg { width: 1rem; height: 1rem; flex: none; margin-top: 0.1rem; color: var(--color-accent-strong); }
+  .chat__note svg { width: 1rem; height: 1rem; flex: none; margin-top: 0.1rem; color: var(--chat-blue-strong); }
   .chat__note strong { color: var(--color-ink); font-weight: 600; }
 
   @keyframes chat-glow {
-    0%, 100% { box-shadow: 0 0 0 0 oklch(0.58 0.15 158 / 0.35); }
-    50% { box-shadow: 0 0 0 5px oklch(0.58 0.15 158 / 0); }
+    0%, 100% { box-shadow: 0 0 0 0 oklch(0.56 0.15 256 / 0.35); }
+    50% { box-shadow: 0 0 0 5px oklch(0.56 0.15 256 / 0); }
   }
   @keyframes chat-float {
     0%, 100% { transform: translateY(0); }
