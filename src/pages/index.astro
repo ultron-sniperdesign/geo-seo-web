@@ -32,8 +32,41 @@ const steps = [
 >
   <Hero />
 
-  <Section bg="tint">
-    <Container>
+  <Section bg="tint" class="answer-feature">
+    <div class="answer-deco" aria-hidden="true">
+      <svg class="cflow" viewBox="0 0 440 260" fill="none" focusable="false" preserveAspectRatio="xMidYMid meet">
+        <!-- ambient částice (fill) -->
+        <g class="cflow__amb">
+          <circle cx="44" cy="40" r="2" /><circle cx="120" cy="214" r="2.4" />
+          <circle cx="206" cy="56" r="1.8" /><circle cx="72" cy="120" r="1.6" />
+          <circle cx="300" cy="28" r="2" /><circle cx="414" cy="44" r="2.2" />
+          <circle cx="360" cy="232" r="2" /><circle cx="170" cy="196" r="1.6" />
+        </g>
+        <!-- světelná linka: zdroj (vlevo, = obsah) → odpověď -->
+        <path class="cflow__beam" d="M0 150 C 110 150, 175 144, 250 140" />
+        <!-- úryvky letící do odpovědi -->
+        <g class="cflow__chips">
+          <rect class="cflow__chip" x="0" y="133" width="40" height="14" rx="7" />
+          <rect class="cflow__chip" x="0" y="133" width="40" height="14" rx="7" />
+          <rect class="cflow__chip" x="0" y="133" width="40" height="14" rx="7" />
+        </g>
+        <!-- karta „Odpověď AI" s citací -->
+        <g class="cflow__ans">
+          <rect class="cflow__card" x="250" y="46" width="180" height="168" rx="14" />
+          <circle class="cflow__dot" cx="272" cy="72" r="5" />
+          <text class="cflow__ai" x="286" y="76">Odpověď AI</text>
+          <rect class="cflow__line" x="270" y="96" width="150" height="7" rx="3.5" />
+          <rect class="cflow__line" x="270" y="114" width="128" height="7" rx="3.5" />
+          <rect class="cflow__line" x="270" y="132" width="144" height="7" rx="3.5" />
+          <g class="cflow__cite">
+            <text class="cflow__citenum" x="270" y="181">[1]</text>
+            <rect class="cflow__citechip" x="296" y="167" width="122" height="24" rx="12" />
+            <text class="cflow__citetext" x="357" y="181">geo-seo.cz</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <Container class="answer-feature__content">
       <AnswerBlock
         text="<strong>GEO (Generative Engine Optimization)</strong> je optimalizace obsahu tak, aby ho generativní AI — ChatGPT, Perplexity, Claude, Google AI Overviews — používala jako zdroj a citovala. Na rozdíl od klasického SEO, které cílí na pozice ve výsledcích, GEO cílí na to, aby vás AI zmínila ve své odpovědi."
       />
@@ -101,4 +134,75 @@ const steps = [
   }
   @media (min-width: 620px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1000px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  /* === Sekce „Stručná odpověď" — citační tok (zdroj → úryvek → citace) === */
+  :global(.section.answer-feature) {
+    position: relative; overflow: hidden; isolation: isolate;
+    background: oklch(0.19 0.025 215); /* tmavé teal-slate */
+  }
+  :global(.answer-feature__content) { position: relative; z-index: 1; }
+
+  .answer-deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .cflow {
+    position: absolute; top: 50%; right: clamp(0.5rem, 4vw, 4rem);
+    transform: translateY(-50%);
+    width: min(56%, 40rem); height: auto; overflow: visible;
+    --gb: oklch(0.84 0.18 150); /* jasná zelená pro glow na tmavém */
+  }
+
+  /* ambient částice */
+  .cflow__amb circle { fill: oklch(0.7 0.08 200); animation: cflow-twinkle 5s var(--ease-out) infinite; }
+  .cflow__amb circle:nth-child(2n) { fill: oklch(0.75 0.12 150); animation-delay: 1.2s; }
+  .cflow__amb circle:nth-child(3n) { animation-delay: 2.4s; }
+
+  /* světelná linka */
+  .cflow__beam {
+    stroke: var(--gb); stroke-opacity: 0.5; stroke-width: 1.5;
+    stroke-dasharray: 4 8; animation: cflow-beam 1s linear infinite;
+  }
+
+  /* letící úryvky */
+  .cflow__chip {
+    fill: var(--gb);
+    filter: drop-shadow(0 0 5px oklch(0.84 0.18 150 / 0.7));
+    animation: cflow-chip 4.5s ease-in-out infinite;
+  }
+  .cflow__chip:nth-of-type(2) { animation-delay: 1.5s; }
+  .cflow__chip:nth-of-type(3) { animation-delay: 3s; }
+
+  /* karta odpovědi */
+  .cflow__card { fill: oklch(0.24 0.02 215); stroke: oklch(0.62 0.05 200 / 0.4); stroke-width: 1; }
+  .cflow__dot { fill: oklch(0.62 0.13 250); }
+  .cflow__ai { fill: oklch(0.82 0.015 220); font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+  .cflow__line { fill: oklch(0.44 0.02 215); }
+
+  /* citace — rozsvítí se při příletu úryvku */
+  .cflow__citenum { fill: var(--gb); font-family: var(--font-mono); font-size: 13px; font-weight: 700; }
+  .cflow__citechip { fill: oklch(0.84 0.18 150 / 0.12); stroke: var(--gb); stroke-opacity: 0.55; stroke-width: 1; }
+  .cflow__citetext { fill: var(--gb); font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-anchor: middle; }
+  .cflow__cite { animation: cflow-cite 1.5s ease-in-out infinite; }
+
+  @keyframes cflow-beam { to { stroke-dashoffset: -12; } }
+  @keyframes cflow-chip {
+    0%   { transform: translate(0, 0) scale(1);          opacity: 0; }
+    12%  { opacity: 1; }
+    84%  { transform: translate(232px, -8px) scale(1);   opacity: 1; }
+    96%  { transform: translate(246px, -10px) scale(0.55); opacity: 0; }
+    100% { transform: translate(246px, -10px) scale(0.55); opacity: 0; }
+  }
+  @keyframes cflow-cite {
+    0%, 100% { opacity: 0.58; }
+    28%      { opacity: 1; }
+  }
+  @keyframes cflow-twinkle {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 0.8; }
+  }
+
+  @media (max-width: 820px) { .cflow { display: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .cflow__beam, .cflow__chip, .cflow__cite, .cflow__amb circle { animation: none !important; }
+    .cflow__chip { opacity: 0; }
+    .cflow__chip:first-of-type { opacity: 1; transform: translateX(150px); }
+  }
 </style>
