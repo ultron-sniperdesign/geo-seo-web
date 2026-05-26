@@ -1,10 +1,11 @@
 ---
 /**
- * Stats.astro — 3–4 KPI dlaždice (číslo + popisek). Pro "Proč teď" datový tah.
+ * Stats.astro — 3–4 KPI dlaždice (číslo + popisek + „proč to řešit"). Datový tah „Proč teď".
  */
 interface StatItem {
   value: string;
   label: string;
+  note?: string;
 }
 interface Props {
   items: StatItem[];
@@ -17,6 +18,7 @@ const { items } = Astro.props;
     <div class="stat">
       <dt class="stat__value tnum">{s.value}</dt>
       <dd class="stat__label">{s.label}</dd>
+      {s.note && <dd class="stat__note">{s.note}</dd>}
     </div>
   ))}
 </dl>
@@ -46,6 +48,15 @@ const { items } = Astro.props;
     margin: 0;
     font-size: 0.9rem;
     line-height: 1.4;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .stat__note {
+    margin: 0.55rem 0 0;
+    padding-top: 0.55rem;
+    border-top: 1px solid var(--color-rule);
+    font-size: 0.82rem;
+    line-height: 1.45;
     color: var(--color-ink-muted);
   }
   @media (min-width: 760px) {
